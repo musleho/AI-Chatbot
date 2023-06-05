@@ -56,7 +56,8 @@ window.addEventListener("load", (e) => {
       $("#chat-bar-bottom")[0].scrollIntoView(true);
       getBotResponse(userText).then((response) => {
         if (response) {
-          botResponse = response.data.choices[0].text;
+          console.log(JSON.stringify(response));
+          botResponse = response.data.choices[0].message.content;
         }
         let botHtml = '<p class="botText"><span>' + botResponse + "</span></p>";
         $("#chatbox").append(botHtml);

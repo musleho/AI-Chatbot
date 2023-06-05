@@ -11,11 +11,13 @@ const getBotResponse = async (prompt) => {
     if (DEBUG) {
         return;
     }
-    return await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 100,
-        temperature: 0.25,
+    return await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+            {"role":"user", "content": prompt}
+        ],
+        max_tokens: 250,
+        n: 1
     })
 };
 
