@@ -1,6 +1,7 @@
 window.addEventListener("load", (e) => {
   // Collapsible
   let coll = $(".collapsible");
+  let chatBody = [];
 
   const getBotResponse = require("./responses.js").default;
 
@@ -36,6 +37,7 @@ window.addEventListener("load", (e) => {
     $("#botStarterMessage").html(
       `<p class="botText"><span> ${firstMessage} </span></p>`
     );
+    chatBody.push({'role': 'system', 'content': firstMessage});
 
     let time = getTime();
 
@@ -54,12 +56,14 @@ window.addEventListener("load", (e) => {
       let userHtml = '<p class="userText"><span>' + userText + "</span></p>";
       $("#chatbox").append(userHtml);
       $("#chat-bar-bottom")[0].scrollIntoView(true);
-      getBotResponse(userText).then((response) => {
+      chatBody.push({'role': 'user', 'content': userText});
+      getBotResponse(chatBody).then((response) => {
         if (response) {
           console.log(JSON.stringify(response));
           botResponse = response.data.choices[0].message.content;
         }
         let botHtml = '<p class="botText"><span>' + botResponse + "</span></p>";
+        chatBody.push({'role': 'assistant', 'content': botResponse});
         $("#chatbox").append(botHtml);
         $("#chat-bar-bottom")[0].scrollIntoView(true);
       });

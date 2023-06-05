@@ -7,15 +7,13 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const getBotResponse = async (prompt) => {
+const getBotResponse = async (chatBody) => {
     if (DEBUG) {
         return;
     }
     return await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [
-            {"role":"user", "content": prompt}
-        ],
+        messages: chatBody,
         max_tokens: 250,
         n: 1
     })
